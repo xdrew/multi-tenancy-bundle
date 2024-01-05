@@ -25,12 +25,11 @@ final readonly class TenantRequestListener
         }
 
         $request = $event->getRequest();
-        $domain = $request->getHost();
+        $subdomain = $request->headers->get('x-subdomain');
 
-        if ($this->isSubdomain($domain)) {
+        if ($subdomain) {
             // Get tenant
-            $site = explode('.', $domain)[0];
-            $tenant = $this->hostnameRepository->findOneBy(["fqdn" => $site]);
+            $tenant = $this->hostnameRepository->findOneBy(["fqdn" => $subdomain]);
 
             if (!$tenant) {
                 throw new TenantNotFound();
@@ -45,17 +44,5 @@ final readonly class TenantRequestListener
                 throw new TenantConnectionException("Error connecting to tenant");
             }
         }
-    }
-
-    /**
-     * Check if the host is a subdomain
-     *
-     * @param [string] $url host domain
-     * @return boolean
-     */
-    private function isSubdomain(string $url) : bool
-    {
-        $exploded = explode('.', $url);
-        return (count($exploded) >= 2);
     }
 }
