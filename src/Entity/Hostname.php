@@ -15,7 +15,7 @@ use MultiTenancyBundle\Repository\HostnameRepository;
 #[Entity(repositoryClass: HostnameRepository::class)]
 class Hostname
 {
-    #[Id, GeneratedValue, Column(type: "integer")]
+    #[Id, GeneratedValue, Column]
     private ?int $id = null;
 
     #[Column(length: 255)]
