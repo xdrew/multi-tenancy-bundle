@@ -21,29 +21,14 @@ class CreateTenantMySql implements CreateTenantInterface
      * @var EntityManagerFactory
      */
     protected $emTenant;
-    /**
-     * @var EntityManagerFactory
-     */
-    private $emFactory;
-    /**
-     * @var CreateSchemaFactory
-     */
-    private $createSchemaFactory;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
 
     public function __construct(
         ManagerRegistry $registry,
-        EntityManagerFactory $emFactory,
-        CreateSchemaFactory $createSchemaFactory,
-        EventDispatcherInterface $dispatcher
+        private readonly EntityManagerFactory $emFactory,
+        private readonly CreateSchemaFactory $createSchemaFactory,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
         $this->emTenant = $registry->getManager('tenant');
-        $this->emFactory = $emFactory;
-        $this->createSchemaFactory = $createSchemaFactory;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -80,8 +65,6 @@ class CreateTenantMySql implements CreateTenantInterface
     /**
      * Create a new user for the new tenant database
      *
-     * @param string $dbName
-     * @param int $tenantId
      * @return void
      */
     private function createUser(string $dbName, int $tenantId): void

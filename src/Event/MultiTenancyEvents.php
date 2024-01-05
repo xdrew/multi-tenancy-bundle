@@ -8,6 +8,6 @@ namespace MultiTenancyBundle\Event;
 
 final class MultiTenancyEvents
 {
-    const TENANT_CREATED = 'tenant.created';
-    const TENANT_REMOVED = 'tenant.removed';
+    public const string TENANT_CREATED = 'tenant.created';
+    public const string TENANT_REMOVED = 'tenant.removed';
 }

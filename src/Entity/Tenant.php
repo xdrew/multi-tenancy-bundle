@@ -140,9 +140,7 @@ class Tenant implements \JsonSerializable
             'id' => $this->getId(),
             'uuid' => $this->getUuid(),
             'created_at' => $this->getCreatedAt(),
-            'hostnames' => $this->getHostnames()->map(function ($object) {
-                return $object->getFqdn();
-            })
+            'hostnames' => $this->getHostnames()->map(fn($object) => $object->getFqdn())
         ];
     }
 }

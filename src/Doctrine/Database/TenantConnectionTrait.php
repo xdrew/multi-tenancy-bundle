@@ -9,8 +9,6 @@ trait TenantConnectionTrait
     /**
      * Get tenant connection parameters
      *
-     * @param string $dbName
-     * @param array $params
      * @return array
      */
     public function getParamsConnectionTenant(string $dbName, array $params): array

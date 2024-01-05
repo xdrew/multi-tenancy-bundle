@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class StatusCommand extends AbstractDoctrineCommand
 {
+    protected static $defaultName = 'tenancy:status';
     /**
      * @var TenantDatabaseName
      */
@@ -25,15 +26,16 @@ final class StatusCommand extends AbstractDoctrineCommand
         $this->tenantDatabaseName = $tenantDatabaseName;
     }
 
+    #[\Override]
     protected function configure(): void
     {
         parent::configure();
         $this
-            ->setName('tenancy:status')
             ->setDescription('Wrapper to launch doctrine:migrations:status command as it would require a "configuration" option')
         ;
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $tenant = $input->getOption('tenant');

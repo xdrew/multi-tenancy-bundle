@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class MultiTenancyExtension extends Extension
 {
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader(

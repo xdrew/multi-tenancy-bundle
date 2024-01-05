@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class DiffCommand extends AbstractDoctrineCommand
 {
+    protected static $defaultName = 'tenancy:diff';
     /**
      * @var TenantDatabaseName
      */
@@ -24,15 +25,16 @@ final class DiffCommand extends AbstractDoctrineCommand
         $this->tenantDatabaseName = $tenantDatabaseName;
     }
 
+    #[\Override]
     protected function configure(): void
     {
         parent::configure();
         $this
-            ->setName('tenancy:diff')
             ->setDescription('Wrapper to launch doctrine:migrations:diff command as it would require a "configuration" option')
         ;
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $newInput = new ArrayInput([]);

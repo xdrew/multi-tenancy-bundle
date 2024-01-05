@@ -14,8 +14,6 @@ final class DirectoryMigration
     /**
      * Get config doctrine migrations
      *
-     * @param string $entityManagerName
-     * @param array $fileMigrations
      * @return ConfigurationArray
      */
     public static function getConfiguration(string $entityManagerName, array $fileMigrations): ConfigurationArray
@@ -36,7 +34,7 @@ final class DirectoryMigration
             $config = new ConfigurationArray([
                 'migrations_paths' => $migration,
             ]);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             throw new DirectoryMigrationException("The doctrine_migrations.yaml file is invalid.");
         }
 

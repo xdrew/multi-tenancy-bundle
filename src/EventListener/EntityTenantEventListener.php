@@ -8,28 +8,15 @@ use MultiTenancyBundle\Doctrine\Database\CreateTenantInterface;
 use MultiTenancyBundle\Doctrine\Database\RemoveTenantInterface;
 use MultiTenancyBundle\Entity\Tenant;
 
-final class EntityTenantEventListener
+final readonly class EntityTenantEventListener
 {
-    /**
-     * @var CreateTenantInterface
-     */
-    private $tenantCreateDatabase;
-
-    /**
-     * @var RemoveTenantInterface
-     */
-    private $tenantRemoveDatabase;
-
-    public function __construct(CreateTenantInterface $tenantCreateDatabase, RemoveTenantInterface $tenantRemoveDatabase)
+    public function __construct(private CreateTenantInterface $tenantCreateDatabase, private RemoveTenantInterface $tenantRemoveDatabase)
     {
-        $this->tenantCreateDatabase = $tenantCreateDatabase;
-        $this->tenantRemoveDatabase = $tenantRemoveDatabase;
     }
 
     /**
      * After persist a new tenant, this create the schema on the database
      *
-     * @param Tenant $args
      * @return void
      */
     public function postPersist(Tenant $args): void
@@ -40,7 +27,6 @@ final class EntityTenantEventListener
     /**
      * Pre remove a tenant, this remove the schema on the database
      *
-     * @param Tenant $args
      * @return void
      */
     public function preRemove(Tenant $args)

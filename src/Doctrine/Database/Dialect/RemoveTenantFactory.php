@@ -40,16 +40,11 @@ class RemoveTenantFactory
 
     public function __invoke(TenantConnectionInterface $tenantConnection): RemoveTenantInterface
     {
-        switch($tenantConnection->getDriverConnection()) {
-            case Driver::MYSQL:
-                $service = $this->removeTenantMySql;
-                break;
-            case Driver::POSTGRESQL:
-                $service = $this->removeTenantPsql;
-                break;
-            default:
-                throw new RuntimeException('Invalid driver. Driver supported mysql and postgresql.');
-        }
+        $service = match ($tenantConnection->getDriverConnection()) {
+            Driver::MYSQL => $this->removeTenantMySql,
+            Driver::POSTGRESQL => $this->removeTenantPsql,
+            default => throw new RuntimeException('Invalid driver. Driver supported mysql and postgresql.'),
+        };
 
         return $service;
     }

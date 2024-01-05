@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class MigrateCommand extends AbstractDoctrineCommand
 {
+    protected static $defaultName = 'tenancy:migrate';
     /**
      * @var TenantRepository
      */
@@ -42,11 +43,11 @@ final class MigrateCommand extends AbstractDoctrineCommand
         $this->tenantDatabaseName = $tenantDatabaseName;
     }
 
+    #[\Override]
     protected function configure(): void
     {
         parent::configure();
         $this
-            ->setName('tenancy:migrate')
             ->setDescription('Wrapper to launch doctrine:migrations:migrate command as it would require a "configuration" option')
             ->addArgument('version', InputArgument::OPTIONAL, 'The version number (YYYYMMDDHHMMSS) or alias (first, prev, next, latest) to migrate to.', 'latest')
             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Execute the migration as a dry run.')
@@ -55,6 +56,7 @@ final class MigrateCommand extends AbstractDoctrineCommand
         ;
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $tenant = $input->getOption('tenant');
@@ -72,8 +74,6 @@ final class MigrateCommand extends AbstractDoctrineCommand
     /**
      * Execute all tenants migration
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return void
      */
     private function executeAllTenants(InputInterface $input, OutputInterface $output): void
@@ -89,9 +89,6 @@ final class MigrateCommand extends AbstractDoctrineCommand
     /**
      * Execute the migration
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param string $tenantDb
      * @return void
      */
     private function migrate(InputInterface $input, OutputInterface $output, string $tenantDb): void

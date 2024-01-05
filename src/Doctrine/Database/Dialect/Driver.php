@@ -8,8 +8,8 @@ use Doctrine\DBAL\Connection;
 
 class Driver
 {
-    public const MYSQL = 'mysql';
-    public const POSTGRESQL = 'postgresql';
+    final public const MYSQL = 'mysql';
+    final public const POSTGRESQL = 'postgresql';
 
     public static function getDriverName(Connection $connection): string
     {

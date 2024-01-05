@@ -21,29 +21,14 @@ class CreateTenantPsql implements CreateTenantInterface
      * @var EntityManagerFactory
      */
     protected $emTenant;
-    /**
-     * @var EntityManagerFactory
-     */
-    private $emFactory;
-    /**
-     * @var CreateSchemaFactory
-     */
-    private $createSchemaFactory;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
 
     public function __construct(
         ManagerRegistry $registry,
-        EntityManagerFactory $emFactory,
-        CreateSchemaFactory $createSchemaFactory,
-        EventDispatcherInterface $dispatcher
+        private readonly EntityManagerFactory $emFactory,
+        private readonly CreateSchemaFactory $createSchemaFactory,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
         $this->emTenant = $registry->getManager('tenant');
-        $this->emFactory = $emFactory;
-        $this->createSchemaFactory = $createSchemaFactory;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
