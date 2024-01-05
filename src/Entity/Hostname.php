@@ -4,46 +4,35 @@ declare (strict_types=1);
 
 namespace MultiTenancyBundle\Entity;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use MultiTenancyBundle\Repository\HostnameRepository;
-use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=HostnameRepository::class)
- */
+#[Entity(repositoryClass: HostnameRepository::class)]
 class Hostname
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[Id, GeneratedValue, Column(type: "integer")]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $fqdn;
+    #[Column(length: 255)]
+    private string $fqdn;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Tenant::class, inversedBy="hostnames", fetch="EAGER")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $tenant;
+    #[ManyToOne(targetEntity: Tenant::class, fetch: "EAGER", inversedBy: "hostnames")]
+    #[JoinColumn(nullable: false)]
+    private ?Tenant $tenant = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $created_at;
+    #[Column(nullable: true)]
+    private ?\DateTimeImmutable $created_at = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated_at;
+    #[Column(nullable: true)]
+    private ?\DateTimeImmutable $updated_at = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $deleted_at;
+    #[Column(nullable: true)]
+    private ?\DateTimeImmutable $deleted_at = null;
 
     public function getId(): ?int
     {
@@ -74,36 +63,36 @@ class Hostname
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    public function setCreatedAt(?\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
 
         return $this;
     }
 
-    public function getDeletedAt(): ?\DateTimeInterface
+    public function getDeletedAt(): ?\DateTimeImmutable
     {
         return $this->deleted_at;
     }
 
-    public function setDeletedAt(?\DateTimeInterface $deleted_at): self
+    public function setDeletedAt(?\DateTimeImmutable $deleted_at): self
     {
         $this->deleted_at = $deleted_at;
 
