@@ -18,5 +18,6 @@ class PsqlUtils
     public static function setSchema(Connection $connection, string $schema): void
     {
         $connection->executeStatement("SET SCHEMA '{$schema}'");
+        $connection->executeStatement("set search_path to '{$schema}', 'public'");
     }
 }
