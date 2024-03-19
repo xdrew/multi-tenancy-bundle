@@ -40,6 +40,7 @@ final readonly class TenantRequestListener
                 $tenantDb = $tenant->getTenant()->getUuid();
                 $this->tenantConnection->getDriverConnection();
                 $this->tenantConnection->tenantConnect($tenantDb);
+                $request->attributes->set('tenant', $tenantDb);
             } catch (Throwable) {
                 throw new TenantConnectionException("Error connecting to tenant");
             }
