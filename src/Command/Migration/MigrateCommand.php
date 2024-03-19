@@ -105,7 +105,7 @@ final class MigrateCommand extends AbstractDoctrineCommand
         $newInput->setInteractive(false);
 
         $output->writeln("<info>Executing tenant: {$tenantDb}</info>");
-        $this->setTenantConnection($df, $tenantDb);
+        $this->setTenantConnection($df, $tenantDb, addPublic: true);
 
         // Execute the migration
         $migrateCommand->run($newInput, $output);

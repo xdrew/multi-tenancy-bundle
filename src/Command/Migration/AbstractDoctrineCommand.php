@@ -38,14 +38,14 @@ abstract class AbstractDoctrineCommand extends Command
         return $this->df->create($em, $emName, $projectDir);
     }
 
-    protected function setTenantConnection(Df $df, string $tenantDb): void
+    protected function setTenantConnection(Df $df, string $tenantDb, bool $addPublic = false): void
     {
         $tenantConnection = $df->getConnection();
 
         $driverName = Driver::getDriverName($tenantConnection);
 
         if (Driver::isPostgreSql($driverName)) {
-            PsqlUtils::setSchema($tenantConnection, $tenantDb);
+            PsqlUtils::setSchema($tenantConnection, $tenantDb, $addPublic);
             return;
         }
 

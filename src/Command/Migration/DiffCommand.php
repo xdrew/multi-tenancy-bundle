@@ -37,14 +37,16 @@ final class DiffCommand extends AbstractDoctrineCommand
     #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (!$tenantDb = $input->getOption('tenant')) {
+            // Set the first tenant connection
+            $tenantDb = $this->tenantDatabaseName->getName();
+        }
         $newInput = new ArrayInput([]);
         $newInput->setInteractive($input->isInteractive());
 
         $df = $this->getDependencyFactory($input);
         $diffCommand = new \Doctrine\Migrations\Tools\Console\Command\DiffCommand($df);
 
-        // Set the first tenant connection
-        $tenantDb = $this->tenantDatabaseName->getName();
         $this->setTenantConnection($df, $tenantDb);
 
         $diffCommand->run($newInput, $output);
